@@ -74,6 +74,7 @@ const App = () => {
 
   const fetchTasks = useCallback(async () => {
     setLoading(true);
+    setError(null); // Clear error before request
     try {
       let params = {
         search: search,
@@ -96,6 +97,7 @@ const App = () => {
 
   const addTask = async (task) => {
     setLoading(true);
+    setError(null); // Clear error before request
     try {
       const response = await axiosInstance.post('/tasks', task);
       setTasks([...tasks, response.data]);
@@ -108,6 +110,7 @@ const App = () => {
 
   const editTask = async (task) => {
     setLoading(true);
+    setError(null); // Clear error before request
     try {
       const response = await axiosInstance.put(`/tasks/${task.id}`, task);
       setTasks(tasks.map((t) => (t.id === task.id ? response.data : t)));
@@ -121,6 +124,7 @@ const App = () => {
 
   const deleteTask = async (id) => {
     setLoading(true);
+    setError(null); // Clear error before request
     try {
       await axiosInstance.delete(`/tasks/${id}`);
       setTasks(tasks.filter((task) => task.id !== id));
@@ -133,6 +137,7 @@ const App = () => {
 
   const toggleComplete = async (id) => {
     setLoading(true);
+    setError(null); // Clear error before request
     try {
       const task = tasks.find((task) => task.id === id);
       const response = await axiosInstance.put(`/tasks/${id}`, { ...task, completed: !task.completed });
